@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nominate & Contact | International Group of Achievers</title>
+    <!-- Favicon -->
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <style>
+        .contact-form-wrapper {
+            background: var(--primary-color);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+        .form-floating > .form-control,
+        .form-floating > .form-select {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border-radius: 6px;
+        }
+        .form-floating > .form-control:focus,
+        .form-floating > .form-select:focus {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: var(--gold-start);
+            box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+            color: var(--text-light);
+        }
+        .form-floating > label {
+            color: var(--text-light);
+        }
+        .form-control::placeholder {
+            color: transparent;
+        }
+        /* Custom map styling container */
+        .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            height: 100%;
+            min-height: 400px;
+        }
+        .contact-info-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--gold-start);
+            margin-right: 20px;
+        }
+        
+        /* Btn Loading state */
+        .btn-loading {
+            position: relative;
+            color: transparent !important;
+        }
+        .btn-loading::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Invalid feedback custom */
+        .invalid-feedback {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/logo.png" alt="International Group of Achievers Logo">
+                <span class="ms-2 ms-md-3 fw-bold text-white fs-5 d-md-none">IGA</span>
+                <span class="ms-2 ms-md-3 fw-bold text-white fs-6 d-none d-md-block">International Group of Achievers</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="awards.html">Awards</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container fade-in">
+            <h1>Contact & <span class="text-gold">Nominate</span></h1>
+            <p class="lead mt-3 mx-auto" style="max-width: 600px;">Submit a visionary leader for the next award cycle, or reach out to our global committee.</p>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <section class="section-padding bg-black">
+        <div class="container">
+            <div class="row g-5">
+                
+                <!-- Form Column -->
+                <div class="col-lg-7 fade-in">
+                    <div class="contact-form-wrapper">
+                        <h3 class="mb-4">Submit a <span class="text-gold">Nomination</span></h3>
+                        
+                        <div id="formSuccess" class="alert alert-success d-none" style="background-color: rgba(25, 135, 84, 0.2); border-color: #198754; color: #a3cfbb;">
+                            Thank you! Your nomination has been submitted successfully to the committee.
+                        </div>
+
+                        <form id="nominationForm" class="needs-validation" novalidate>
+                            
+                            <!-- Name -->
+                            <div class="form-floating mb-4">
+                                <input type="text" class="form-control" id="nomineeName" placeholder="Nominee Name" required>
+                                <label for="nomineeName">Nominee Full Name</label>
+                                <div class="invalid-feedback">Please provide the nominee's full name.</div>
+                            </div>
+                            
+                            <!-- Email -->
+                            <div class="form-floating mb-4">
+                                <input type="email" class="form-control" id="nomineeEmail" placeholder="name@example.com" required>
+                                <label for="nomineeEmail">Nominee / Contact Email</label>
+                                <div class="invalid-feedback">Please provide a valid email address.</div>
+                            </div>
+                            
+                            <!-- Category -->
+                            <div class="form-floating mb-4">
+                                <select class="form-select" id="nominationCategory" required>
+                                    <option value="" selected disabled>Select an Award Category</option>
+                                    <option value="innovation">Innovation & Technology</option>
+                                    <option value="leadership">Global Business Leadership</option>
+                                    <option value="impact">Social Impact</option>
+                                    <option value="arts">Arts & Culture</option>
+                                    <option value="environment">Environmental Stewardship</option>
+                                    <option value="education">Educational Excellence</option>
+                                </select>
+                                <label for="nominationCategory">Award Category</label>
+                                <div class="invalid-feedback">Please select an award category.</div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control" id="nominationDescription" placeholder="Description of Achievements" style="height: 150px" required minlength="50"></textarea>
+                                <label for="nominationDescription">Description of Achievements (min. 50 characters)</label>
+                                <div class="invalid-feedback">Please provide a detailed description (at least 50 characters).</div>
+                            </div>
+
+                            <!-- Submit Btn -->
+                            <button type="submit" class="btn btn-gold w-100 py-3 mt-2" id="submitBtn">
+                                Submit Nomination
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Info & Map Column -->
+                <div class="col-lg-5 fade-in" style="transition-delay: 0.2s;">
+                    
+                    <!-- Contact Info -->
+                    <div class="mb-5">
+                        <h4 class="mb-4">Global <span class="text-gold">Headquarters</span></h4>
+                        <div class="contact-info-card">
+                            <i class="bi bi-geo-alt-fill contact-icon"></i>
+                            <div>
+                                <h6 class="mb-1 text-light">Address</h6>
+                                <p class="text-white mb-0">NO,3,SANTHOSH NAGAR,<br>THAMARI STREET, REDDIPALAYAM,<br>AYAPAKKAM, CH-77.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-card">
+                            <i class="bi bi-envelope-fill contact-icon"></i>
+                            <div>
+                                <h6 class="mb-1 text-light">Email Address</h6>
+                                <p class="text-white mb-0"><a href="mailto:internationalgroupofachievers@gmail.com" class="text-white text-decoration-none" style="word-break: break-all;">internationalgroupofachievers@gmail.com</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-card">
+                            <i class="bi bi-telephone-fill contact-icon"></i>
+                            <div>
+                                <h6 class="mb-1 text-light">Phone</h6>
+                                <p class="text-white mb-0">+91 7397772334</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 mt-4 rounded border" style="background: rgba(212, 175, 55, 0.05); border-color: rgba(212, 175, 55, 0.2) !important;">
+                            <h6 class="text-gold mb-2"><i class="bi bi-info-circle me-2"></i>Contact Note</h6>
+                            <p class="mb-0 text-white" style="font-size: 0.9rem;">For nominations, partnerships, and media inquiries, please reach out to our team. We look forward to collaborating with achievers and organizations worldwide.</p>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d88338.80287413665!2d6.0664972132646635!3d46.20492659039237!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478c650693d0e2bf%3A0xcb173e6da805ed5a!2sGeneva%2C%20Switzerland!5e0!3m2!1sen!2sus!4v1700685651610!5m2!1sen!2sus" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row pb-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <img src="images/logo.png" alt="IGA Logo" class="footer-logo">
+                    <p class="text-white pe-4">The International Group of Achievers is dedicated to recognizing, celebrating, and empowering global excellence across all industries.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-white mb-4">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="awards.html">Awards</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-white mb-4">Support</h5>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="sop.html">SOP & Rules</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="text-white mb-4">Connect With Us</h5>
+                    <p class="text-white mb-3">Stay updated on our latest news and upcoming award ceremonies.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="https://www.instagram.com/internationalgroupofachievers/" target="_blank"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 International Group of Achievers. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="backToTop" title="Go to top">
+        <i class="bi bi-chevron-up"></i>
+    </button>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <!-- Form Validation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('nominationForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('formSuccess');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                successMsg.classList.add('d-none'); // Hide success message on resubmit
+
+                if (form.checkValidity()) {
+                    // Start loading animation
+                    submitBtn.classList.add('btn-loading');
+                    // Disable inputs
+                    Array.from(form.elements).forEach(el => el.disabled = true);
+                    
+                    // Simulate network request
+                    setTimeout(() => {
+                        submitBtn.classList.remove('btn-loading');
+                        Array.from(form.elements).forEach(el => el.disabled = false);
+                        
+                        // Show success
+                        successMsg.classList.remove('d-none');
+                        
+                        // Reset form
+                        form.reset();
+                        form.classList.remove('was-validated');
+                    }, 2000);
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    </script>
+</body>
+</html>
